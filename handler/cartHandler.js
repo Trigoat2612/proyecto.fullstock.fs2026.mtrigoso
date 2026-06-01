@@ -1,5 +1,6 @@
 import { DATA_PATH, readDataFile} from "../utils/handlerUtils.js";
 import fs from "node:fs/promises";
+import { AppError } from "../utils/errorUtils.js";
 
 export async function cartHandler(req, res) {
 
@@ -47,7 +48,7 @@ export async function addCartHandler(req, res) {
       (product) => product.id === productId && product.categoryId === categoryId,
     );
     if (!product) {
-        return res.status(404).render("404"); // Vista de error
+        throw new AppError("Producto no encontrado", 404); // Vista de error
     }
     // 2. Obtener o crear el carrito (por ahora usaremos el primero)
     const cart = data.carts[0] || { id: 1, items: [] };
@@ -74,7 +75,7 @@ export async function updateCartItemQuantityHandler(req, res) {
     const action = req.body.action;
 
     if (!Number.isInteger(productId) || !Number.isInteger(categoryId)) {
-        return res.status(400).send("Producto inválido");
+        throw new AppError("Producto inválido", 400);
     }
 
     const data = await readDataFile();
@@ -102,7 +103,7 @@ export async function updateCartItemQuantityHandler(req, res) {
     } else if (action === "remove") {
         cart.items.splice(itemIndex, 1);
     } else {
-        return res.status(400).send("Acción inválida");
+        throw new AppError("Acción inválida", 404); // Vista de error
     }
 
     data.carts[0] = cart;

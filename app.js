@@ -4,6 +4,8 @@ import { categoryHandler } from "./handler/categoryHandler.js";
 import { productsHandler } from "./handler/productHandler.js";
 import { addCartHandler, cartHandler, updateCartItemQuantityHandler } from "./handler/cartHandler.js";
 import { countCartItems } from "./middlewares/global.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
+import { notFoundHandler } from "../full-stock-fs-enero-2026/handler/notFoundHandler.js";
 
 const app = express();
 const PORT = 3000;
@@ -55,9 +57,9 @@ app.get("/terms", (req, res) => {
 app.post("/cart/add-item", addCartHandler);
 app.post("/cart/item/update", updateCartItemQuantityHandler);
 
-app.use((req, res) => {
-    res.status(404).render("404", { title: "Page Not Found" });
-});
+app.use(notFoundHandler);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

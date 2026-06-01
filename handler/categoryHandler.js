@@ -1,3 +1,4 @@
+import { AppError } from "../utils/errorUtils.js";
 import { parsePriceToCents, readDataFile } from "../utils/handlerUtils.js";
 import { } from "../utils/handlerUtils.js";
 
@@ -17,7 +18,7 @@ export async function categoryHandler(req, res) {
     );
 
     if (!category) {
-        return res.status(404).render("404");
+        throw new AppError("Categoría no encontrada", 404);
     }
 
     const products = data.products.filter((product) => {
