@@ -1,0 +1,37 @@
+<section class="product">
+    <div class="container product__container">
+    <div class="product__image">
+        <img
+        src="<%= product.imgSrc %>"
+        alt="Polo React"
+        class="product__image_content"
+        />
+    </div>
+    <div class="product__info">
+        <h1 class="product__title"><%= product.name %></h1>
+        <p class="product__price">S/ <%= (product.price / 100).toFixed(2) %></p>
+        <p class="product__description">
+        <%= product.description %>
+        </p>
+        <form class="product__form" action="/cart/add-item" method="POST">
+            <input type="hidden" name="productId" value="<%= product.id %>" />
+            <input type="hidden" name="categoryId" value="<%= product.categoryId %>" />
+            <button class="button button--xl product__button" type="submit">
+                Agregar al Carrito
+            </button>
+        </form>
+        <div class="separator product__separator"></div>
+            <div class="product__features">
+            <h2 class="product__features_title">Características</h2>
+            <% if (product.features && product.features.length === 0) { %>
+                <p>No hay características en este producto.</p>
+            <% } %>
+            <ul class="product__features_list">
+                <% for (const feature of product.features) {%>
+                    <li><%= feature %></li>
+                <% } %>
+            </ul>
+            </div>
+    </div>
+    </div>
+</section>

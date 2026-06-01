@@ -1,0 +1,59 @@
+<section class="section">
+    <div class="container cart">
+        <h1 class="cart__title">Carrito de compras</h1>
+        <div class="cart__container">
+            <%= cartProducts.length === 0 ? `
+                <p class="cart__empty">Tu carrito está vacío.</p>
+            ` : "" %>
+            <% for (const product of cartProducts) { %>
+            <div class="cart__item">
+                <div class="cart__item-image">
+                    <img src="<%= product.imgSrc %>" alt="<%= product.name %>" class="cart__item-image-content" />
+                </div>
+                <div class="cart__item-details">
+                    <div class="cart__item-header">
+                        <h2 class="cart__item-title"><%= product.name %></h2>
+                        <form action="/cart/item/update" method="POST">
+                            <input type="hidden" name="productId" value="<%= product.productId %>">
+                            <input type="hidden" name="categoryId" value="<%= product.categoryId %>">
+                            <input type="hidden" name="action" value="remove">
+                            <button class="button button--sm-icon button--outline" aria-label="Eliminar artículo">
+                            <img src="/images/icons/trash.svg" alt="Eliminar artículo" />
+                            </button>
+                        </form>
+                    </div>
+                    <div class="cart__item-footer">
+                        <p class="cart__item-price">S/ <%= (product.price / 100).toFixed(2) %></p>
+                        <div class="cart__item-quantity">
+                            <form action="/cart/item/update" method="POST">
+                                <input type="hidden" name="productId" value="<%= product.productId %>">
+                                <input type="hidden" name="categoryId" value="<%= product.categoryId %>">
+                                <input type="hidden" name="action" value="decrease">
+                                <button class="button button--sm-icon button--outline" aria-label="Reducir cantidad" >
+                                    <img src="/images/icons/minus.svg" alt="Reducir cantidad" />
+                                </button>
+                            </form>
+                            <span class="cart__item-quantity-display"><%= product.quantity %></span>
+                            <form action="/cart/item/update" method="POST">
+                                <input type="hidden" name="productId" value="<%= product.productId %>">
+                                <input type="hidden" name="categoryId" value="<%= product.categoryId %>">
+                                <input type="hidden" name="action" value="increase">
+                                <button class="button button--sm-icon button--outline" aria-label="Aumentar cantidad" >
+                                    <img src="/images/icons/plus.svg" alt="Aumentar cantidad" />
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            <div class="cart__total">
+                <p>Total</p>
+                <p>S/ <%= (total / 100).toFixed(2) %></p>
+            </div>
+            <div class="cart__action">
+            <a class="button button--lg cart__action-button" href="/checkout">Continuar Compra</a>
+            </div>
+        </div>
+    </div>
+</section>
