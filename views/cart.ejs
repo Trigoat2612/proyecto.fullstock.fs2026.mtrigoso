@@ -13,7 +13,7 @@
                 <div class="cart__item-details">
                     <div class="cart__item-header">
                         <h2 class="cart__item-title"><%= product.name %></h2>
-                        <form action="/cart/item/update" method="POST">
+                        <form action="/cart/item/delete" method="POST">
                             <input type="hidden" name="productId" value="<%= product.productId %>">
                             <input type="hidden" name="categoryId" value="<%= product.categoryId %>">
                             <input type="hidden" name="action" value="remove">

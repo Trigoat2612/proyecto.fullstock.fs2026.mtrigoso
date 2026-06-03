@@ -310,12 +310,12 @@
         {
           "productId": 1,
           "categoryId": 1,
-          "quantity": 11
+          "quantity": 12
         },
         {
-          "productId": 2,
+          "productId": 1,
           "categoryId": 2,
-          "quantity": 3
+          "quantity": 6
         }
       ]
     }

@@ -100,11 +100,40 @@ export async function updateCartItemQuantityHandler(req, res) {
         if (cart.items[itemIndex].quantity <= 0) {
         cart.items.splice(itemIndex, 1);
         }
-    } else if (action === "remove") {
-        cart.items.splice(itemIndex, 1);
     } else {
         throw new AppError("Acción inválida", 404); // Vista de error
     }
+
+    data.carts[0] = cart;
+
+    await fs.writeFile(DATA_PATH, JSON.stringify(data, null, 2));
+
+    return res.redirect("/cart");
+}
+
+export async function deleteCartItemQuantityHandler(req, res) {
+    const productId = Number(req.body.productId);
+    const categoryId = Number(req.body.categoryId);
+
+    if (!Number.isInteger(productId) || !Number.isInteger(categoryId)) {
+        throw new AppError("Producto inválido", 400);
+    }
+
+    const data = await readDataFile();
+
+    const cart = data.carts[0];
+
+    if (!cart) {
+        return res.redirect("/cart");
+    }
+
+    const itemIndex = cart.items.findIndex(
+        (item) => item.productId === productId && item.categoryId === categoryId
+    );
+
+    if (itemIndex === -1) { return res.redirect("/cart"); }
+
+    cart.items.splice(itemIndex, 1);
 
     data.carts[0] = cart;
 

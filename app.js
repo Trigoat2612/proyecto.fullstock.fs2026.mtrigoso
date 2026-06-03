@@ -2,7 +2,7 @@ import express from "express";
 import expressLayouts from "express-ejs-layouts";
 import { categoryHandler } from "./handler/categoryHandler.js";
 import { productsHandler } from "./handler/productHandler.js";
-import { addCartHandler, cartHandler, updateCartItemQuantityHandler } from "./handler/cartHandler.js";
+import { addCartHandler, cartHandler, updateCartItemQuantityHandler, deleteCartItemQuantityHandler } from "./handler/cartHandler.js";
 import { countCartItems } from "./middlewares/global.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { notFoundHandler } from "../full-stock-fs-enero-2026/handler/notFoundHandler.js";
@@ -56,6 +56,7 @@ app.get("/terms", (req, res) => {
 
 app.post("/cart/add-item", addCartHandler);
 app.post("/cart/item/update", updateCartItemQuantityHandler);
+app.post("/cart/item/delete", deleteCartItemQuantityHandler);
 
 app.use(notFoundHandler);
 
